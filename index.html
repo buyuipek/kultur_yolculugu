@@ -1,0 +1,817 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kültür Yolculuğu</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="popup-overlay" id="popupOverlay" onclick="closeLogin()"></div>
+
+ <div class="login-popup" id="loginPopup">
+  <h2>Üye Girişi</h2>
+  <input type="email" id="emailInput" placeholder="E-posta" />
+  <input type="password" id="passwordInput" placeholder="Şifre" />
+  <button onclick="login()">Giriş Yap</button>
+  <p style="margin-top:10px;">Hesabınız yok mu? <a href="#" onclick="openRegister()">Kaydol</a></p>
+
+</div>
+
+
+  <div class="container">
+    <div class="navbar">
+      <div class="logo-container">
+        <div class="menu-icon" onclick="toggleFavorite()">
+          <div></div><div></div><div></div>
+        </div>
+        <div class="logo">
+          <a href="#">KÜLTÜR YOLCULUĞU</a>
+        </div>
+      </div>
+     <ul>
+  <li>
+    <img src="https://cdn-icons-png.flaticon.com/512/25/25694.png" alt="home" />
+    <a href="#" onclick="goBack()">Ana Sayfa</a>
+  </li>
+
+  <!-- Giriş yapmamış kullanıcıya gösterilecek -->
+  <li id="loginLink">
+    <img src="https://cdn-icons-png.flaticon.com/512/747/747376.png" alt="user" />
+    <a onclick="openLogin()">Üye Girişi</a>
+  </li>
+
+  <!-- Giriş yapmış kullanıcıya gösterilecek -->
+  <li id="userInfo" style="display: none; position: relative;">
+    <img src="https://cdn-icons-png.flaticon.com/512/747/747376.png" alt="user" />
+    <span id="userName" style="color:white; margin-left: 5px; cursor: pointer;" onclick="toggleLogoutMenu()"></span>
+
+    <!-- Açılır çıkış menüsü -->
+    <div id="logoutMenu" style="display:none; position: absolute; top: 30px; left: 0; background: white; padding: 8px 12px; border-radius: 6px; box-shadow: 0 0 8px rgba(0,0,0,0.3); z-index: 100;">
+      <a href="#" onclick="logout()" style="text-decoration: none; color: #333;">Çıkış Yap</a>
+    </div>
+  </li>
+
+ <li>
+  <span style="font-size: 18px;">🎯</span>
+  <a href="#" onclick="openSiteAmaciModal()">Site Amacı</a>
+</li>
+
+</ul>
+
+
+    </div>
+
+    <div id="backArrow" class="back-arrow" onclick="goBack()">←</div>
+
+<div class="center-buttons vertical-buttons">
+  <button class="film-btn" onclick="showFilmPage()">🎬 Film</button>
+  <button class="kitap-btn" onclick="showKitapPage()">📚 Kitap</button>
+  <button class="tiyatro-btn" onclick="showTiyatroPage()">🎭 Tiyatro</button>
+</div>
+
+
+
+
+    <!-- Sitenin Amacı Modal -->
+<div id="siteAmaciModal" class="modal">
+  <div class="modal-content">
+    <span class="close" onclick="closeSiteAmaciModal()">&times;</span>
+    <h2>Sitenin Amacı</h2>
+    <p>Bu site, kültürel içerikleri bir araya getirerek ziyaretçilerin film, kitap ve tiyatro hakkında bilgi edinmesini, yorum yapmasını ve favorilerini kaydetmesini sağlar.</p>
+  </div>
+</div>
+
+    
+<div class="favorites-panel" id="favoritesPanel">
+  <div class="favorites-label" onclick="handleFavoritesClick()">
+    <img src="https://cdn-icons-png.flaticon.com/512/833/833472.png" alt="heart" />
+    <span>Favoriler</span>
+  </div>
+
+  <div class="saved-note" onclick="handleSavedClick()">
+    <img src="https://cdn-icons-png.flaticon.com/512/1828/1828817.png" alt="save" style="width: 20px; height: 20px; margin-right: 6px; vertical-align: middle;" />
+    <span>Kaydedilenler</span>
+  </div>
+</div>
+
+
+
+
+    <!-- Film Sayfası -->
+    <div id="filmPage" class="content-page">
+      <div class="film-grid">
+        <div class="film-card" data-title="Good Will Hunting">
+          <img src="/resimler1/gwh.jfif" alt="Good Will Hunting">
+          <div class="film-info">
+            <h3>Good Will Hunting</h3>
+            <p>1997</p>
+            <button class="favorite-btn" onclick="toggleFavoriteItem(event)">❤️</button>
+            <button class="comment-toggle" onclick="toggleCommentBox(event)">💬</button>
+          </div>
+        </div>
+        <div class="film-card" data-title="The Matrix 1999">
+          <img src="/resimler1/matrix.jfif" alt="The Matrix 1999">
+          <div class="film-info">
+            <h3>The Matrix 1999</h3>
+            <p>1999</p>
+            <button class="favorite-btn" onclick="toggleFavoriteItem(event)">❤️</button>
+            <button class="comment-toggle" onclick="toggleCommentBox(event)">💬</button>
+          </div>
+        </div>
+        <div class="film-card" data-title="Star Wars The Phantom Menace">
+          <img src="/resimler1/star.jfif" alt="Star Wars The Phantom Menace">
+          <div class="film-info">
+            <h3>Star Wars The Phantom Menace</h3>
+            <p>1999</p>
+            <button class="favorite-btn" onclick="toggleFavoriteItem(event)">❤️</button>
+            <button class="comment-toggle" onclick="toggleCommentBox(event)">💬</button>
+          </div>
+        </div>
+        <div class="film-card" data-title="Aftersun">
+          <img src="/resimler1/aftersun.jfif" alt="Aftersun">
+          <div class="film-info">
+            <h3>Aftersun</h3>
+            <p>2022</p>
+            <button class="favorite-btn" onclick="toggleFavoriteItem(event)">❤️</button>
+            <button class="comment-toggle" onclick="toggleCommentBox(event)">💬</button>
+          </div>
+        </div>
+        <div class="film-card" data-title="Fight Club">
+          <img src="/resimler1/fight.jfif" alt="Fight Club">
+          <div class="film-info">
+            <h3>Fight Club</h3>
+            <p>1999</p>
+            <button class="favorite-btn" onclick="toggleFavoriteItem(event)">❤️</button>
+            <button class="comment-toggle" onclick="toggleCommentBox(event)">💬</button>
+          </div>
+        </div>
+        <div class="film-card" data-title="Green Mıle">
+          <img src="/resimler1/yeşil.jfif" alt="Green Mıle">
+          <div class="film-info">
+            <h3>Green Mıle<h3>
+            <p>1999</p>
+            <button class="favorite-btn" onclick="toggleFavoriteItem(event)">❤️</button>
+            <button class="comment-toggle" onclick="toggleCommentBox(event)">💬</button>
+          </div>
+        </div>
+        <div class="film-card" data-title="Inception">
+          <img src="/resimler1/incep.jfif" alt="Inception">
+          <div class="film-info">
+            <h3>Inception</h3>
+            <p>2010</p>
+            <button class="favorite-btn" onclick="toggleFavoriteItem(event)">❤️</button>
+            <button class="comment-toggle" onclick="toggleCommentBox(event)">💬</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Kitap Sayfası -->
+<div id="kitapPage" class="content-page">
+  <div class="kitap-grid"> <!-- DÜZELTİLDİ: Kitap-grid → kitap-grid -->
+    <div class="kitap-card" data-title="İmkansızın Şarkısı">
+      <img src="/resimler1/imkansız.jfif" alt="İmkansızın Şarkısı">
+      <div class="kitap-info">
+        <h3>İmkansızın Şarkısı</h3>
+        <p>1987</p>
+        <button class="favorite-btn" onclick="toggleFavoriteItem(event)">❤️</button>
+        <button class="comment-toggle" onclick="toggleCommentBox(event)">💬</button>
+      </div>
+    </div>
+
+    <div class="kitap-card" data-title="İçimizdeki Şeytan">
+      <img src="/resimler1/içimizdeki.jfif" alt="İçimizdeki Şeytan">
+      <div class="kitap-info">
+        <h3>İçimizdeki Şeytan</h3>
+        <p>1940</p>
+        <button class="favorite-btn" onclick="toggleFavoriteItem(event)">❤️</button>
+        <button class="comment-toggle" onclick="toggleCommentBox(event)">💬</button>
+      </div>
+    </div>
+
+    <div class="kitap-card" data-title="Beyaz Diş">
+      <img src="/resimler1/beyaz.jfif" alt="Beyaz Diş">
+      <div class="kitap-info">
+        <h3>Beyaz Diş</h3>
+        <p>1906</p>
+        <button class="favorite-btn" onclick="toggleFavoriteItem(event)">❤️</button>
+        <button class="comment-toggle" onclick="toggleCommentBox(event)">💬</button>
+      </div>
+    </div>
+
+    <div class="kitap-card" data-title="Nutuk">
+      <img src="/resimler1/nutuk.jfif" alt="Nutuk">
+      <div class="kitap-info">
+        <h3>Nutuk</h3>
+        <p>1927</p>
+        <button class="favorite-btn" onclick="toggleFavoriteItem(event)">❤️</button>
+        <button class="comment-toggle" onclick="toggleCommentBox(event)">💬</button>
+      </div>
+    </div>
+
+    <div class="kitap-card" data-title="Dalgaların Sesi">
+      <img src="/resimler1/dalga.jfif" alt="Dalgaların Sesi">
+      <div class="kitap-info">
+        <h3>Dalgaların Sesi</h3>
+        <p>1954</p>
+        <button class="favorite-btn" onclick="toggleFavoriteItem(event)">❤️</button>
+        <button class="comment-toggle" onclick="toggleCommentBox(event)">💬</button>
+      </div>
+    </div>
+
+    <div class="kitap-card" data-title="Masumiyet Müzesi">
+      <img src="/resimler1/masumiyet.jfif"alt="Masumiyet Müzesi">
+      <div class="kitap-info">
+        <h3>Masumiyet Müzesi</h3>
+        <p>2008</p>
+        <button class="favorite-btn" onclick="toggleFavoriteItem(event)">❤️</button>
+        <button class="comment-toggle" onclick="toggleCommentBox(event)">💬</button>
+      </div>
+    </div>
+
+    <div class="kitap-card" data-title="Sofie'nin Dünyası">
+      <img src="/resimler1/sofie.jfif" alt="Sofie'nin Dünyası">
+      <div class="kitap-info">
+        <h3>Sofie'nin Dünyası</h3>
+        <p>1991</p>
+        <button class="favorite-btn" onclick="toggleFavoriteItem(event)">❤️</button>
+        <button class="comment-toggle" onclick="toggleCommentBox(event)">💬</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- Tiyatro Sayfası -->
+<div id="tiyatroPage" class="content-page">
+  <h2 style="text-align:center;">Eylül 2025 Tiyatro Takvimi</h2>
+
+  <!-- Şehir Seçimi -->
+  <div id="sehirSecimi" class="sehir-secimi">
+    <button onclick="sehirSec('İstanbul')">İstanbul</button>
+    <button onclick="sehirSec('Ankara')">Ankara</button>
+    <button onclick="sehirSec('İzmir')">İzmir</button>
+    <button onclick="sehirSec('Bursa')">Bursa</button>
+  </div>
+
+  <!-- Takvim buraya alındı -->
+  <div id="tiyatroTakvimi" style="display:none;">
+    <div class="calendar">
+      <!-- Gün başlıkları -->
+      <div class="calendar-day title">Pzt</div>
+      <div class="calendar-day title">Sal</div>
+      <div class="calendar-day title">Çar</div>
+      <div class="calendar-day title">Per</div>
+      <div class="calendar-day title">Cum</div>
+      <div class="calendar-day title">Cmt</div>
+      <div class="calendar-day title">Paz</div>
+
+      <!-- Gün içerikleri -->
+      <div class="calendar-day">1<br><small>Hamlet<br>20:00</small></div>
+      <div class="calendar-day">2</div>
+      <div class="calendar-day">3</div>
+      <div class="calendar-day">4<br><small>Romeo ve Juliet<br>19:30</small></div>
+      <div class="calendar-day">5</div>
+      <div class="calendar-day">6</div>
+      <div class="calendar-day">7</div>
+      <div class="calendar-day">8</div>
+      <div class="calendar-day">9</div>
+      <div class="calendar-day">10</div>
+      <div class="calendar-day">11</div>
+      <div class="calendar-day">12<br><small>Çehov'dan Hikâyeler<br>20:00</small></div>
+      <div class="calendar-day">13</div>
+      <div class="calendar-day">14</div>
+      <div class="calendar-day">15<br><small>Hamlet<br>20:00</small></div>
+      <div class="calendar-day">16</div>
+      <div class="calendar-day">17</div>
+      <div class="calendar-day">18</div>
+      <div class="calendar-day">19</div>
+      <div class="calendar-day">20</div>
+      <div class="calendar-day">21<br><small>Çocuk Oyunu<br>14:00</small></div>
+      <div class="calendar-day">22</div>
+      <div class="calendar-day">23</div>
+      <div class="calendar-day">24</div>
+      <div class="calendar-day">25<br><small>Bir Yaz Gecesi Rüyası<br>21:00</small></div>
+      <div class="calendar-day">26</div>
+      <div class="calendar-day">27</div>
+      <div class="calendar-day">28</div>
+      <div class="calendar-day">29</div>
+      <div class="calendar-day">30</div>
+    </div>
+  </div>
+</div>
+
+
+
+
+  <!-- Modal -->
+  <div id="filmModal" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeModal()">&times;</span>
+      <h2 id="modalTitle"></h2>
+      <p id="modalYear"></p>
+      <p id="modalRating"></p>
+      <p id="modalActors"></p>
+      <p id="modalDescription"></p>
+    </div>
+  </div>
+
+<div id="kitapModal" class="modal">
+  <div class="modal-content">
+    <span class="close" onclick="closeKitapModal()">&times;</span>
+    <h2 id="kitapModalTitle"></h2>
+    <p id="kitapModalYear"></p>
+    <p id="kitapModalRating"></p>
+    <p id="kitapModalAuthor"></p>
+    <p id="kitapModalDescription"></p>
+  </div>
+</div>
+
+
+  <!-- Yorum Kutusu -->
+  <div id="commentBox" class="comment-box">
+    <div class="comment-header">
+      <span>Yorumlar</span>
+      <span class="close-comment" onclick="toggleCommentBox()">&times;</span>
+    </div>
+    <textarea placeholder="Yorumunuzu yazın..."></textarea>
+    <button>Gönder</button>
+  </div>
+
+  <script>
+  const filmData = {
+  "Good Will Hunting": {
+    year: "1997",
+    rating: "8.3/10",
+    actors: "Matt Damon, Robin Williams, Ben Affleck",
+    description: "Will Hunting, MIT'de temizlik görevlisi olarak çalışan ve matematik dehası olan genç bir adamdır. Geçmişiyle yüzleşmesi ve potansiyelini keşfetmesi için bir terapistin yardımıyla hayatı değişir."
+  },
+  "Inception": {
+    year: "2010",
+    rating: "8.8/10",
+    actors: "Leonardo DiCaprio, Joseph Gordon-Levitt, Elliot Page",
+    description: "Fikir hırsızlığı konusunda uzman olan Cobb, bu kez bir fikri zihinlere yerleştirme göreviyle karşı karşıyadır."
+  },
+  "The Matrix 1999": {
+    year: "1999",
+    rating: "8.7/10",
+    actors: "Keanu Reeves, Laurence Fishburne, Carrie-Anne Moss",
+    description: "Neo, yaşadığı dünyanın bir simülasyon olduğunu fark eder ve insanlığı makinelerden kurtarmak için mücadeleye başlar."
+  },
+  "Star Wars The Phantom Menace": {
+    year: "1999",
+    rating: "6.5/10",
+    actors: "Liam Neeson, Ewan McGregor, Natalie Portman",
+    description: "Galaktik Cumhuriyet’in çöküş sürecini anlatan filmde, genç Anakin Skywalker'ın hikâyesi başlıyor."
+  },
+  "Fight Club": {
+    year: "1999",
+    rating: "8.8/10",
+    actors: "Brad Pitt, Edward Norton, Helena Bonham Carter",
+    description: "Kimlik bunalımı yaşayan bir adam, Tyler Durden adında gizemli biriyle tanışır ve birlikte yeraltı dövüş kulübü kurarlar."
+  },
+  "Green Mıle": {
+    year: "1999",
+    rating: "8.6/10",
+    actors: "Tom Hanks, Michael Clarke Duncan",
+    description: "Bir gardiyanın, idam mahkûmlarından birinin doğaüstü güçlere sahip olduğunu keşfetmesiyle yaşadığı içsel yolculuk."
+  },
+  "Aftersun": {
+    year: "2022",
+    rating: "7.6/10",
+    actors: "Paul Mescal, Frankie Corio, Celia Rowlson-Hall",
+    description: "Sophie'nin çocukluk tatilinden kalma hatıraları üzerinden babasıyla olan ilişkisini yeniden keşfetmesini anlatır."
+  }
+};
+
+
+   const kitapData = {
+  "İmkansızın Şarkısı": {
+    year: "1987",
+    author: "Haruki Murakami",
+    rating: "8.1/10",
+    description: "Norwegian Wood adlı bu eser, genç bir adamın aşk, kayıp ve büyüme sürecini konu alır."
+  },
+  "İçimizdeki Şeytan": {
+    year: "1940",
+    author: "Sabahattin Ali",
+    rating: "8.4/10",
+    description: "İçsel çatışmalar ve bireyin topluma yabancılaşmasını anlatan Türk edebiyatının klasiklerinden biridir."
+  },
+  "Beyaz Diş": {
+    year: "1906",
+    author: "Jack London",
+    rating: "8.3/10",
+    description: "Vahşi doğada geçen bu hikâyede, kurt-köpek melezi Beyaz Diş'in evcilleşme süreci anlatılır."
+  },
+  "Nutuk": {
+    year: "1927",
+    author: "Mustafa Kemal Atatürk",
+    rating: "9.5/10",
+    description: "Kurtuluş Savaşı'nın ve Türkiye Cumhuriyeti'nin kuruluşunun detaylı anlatımı."
+  },
+  "Dalgaların Sesi": {
+    year: "1954",
+    author: "Yukio Mishima",
+    rating: "7.8/10",
+    description: "Bir Japon balıkçı kasabasında geçen sade ama derin bir aşk hikâyesi."
+  },
+  "Masumiyet Müzesi": {
+    year: "2008",
+    author: "Orhan Pamuk",
+    rating: "8.2/10",
+    description: "Tutkulu ve takıntılı bir aşkın etrafında gelişen anı ve eşya biriktirme temalı roman."
+  },
+  "Sofie'nin Dünyası": {
+    year: "1991",
+    author: "Jostein Gaarder",
+    rating: "8.7/10",
+    description: "Felsefi sorularla dolu bu kitapta genç Sofie, felsefe tarihi üzerinden büyüleyici bir yolculuğa çıkar."
+  }
+};
+
+
+    document.querySelectorAll(".film-card").forEach(card => {
+  card.addEventListener("click", e => {
+    if (e.target.classList.contains("comment-toggle") || e.target.classList.contains("favorite-btn")) return;
+
+    const title = card.dataset.title;
+    const data = filmData[title];
+
+    if (data) {
+      document.getElementById("modalTitle").textContent = title;
+      document.getElementById("modalYear").textContent = "Yıl: " + data.year;
+      document.getElementById("modalRating").textContent = "IMDb: " + data.rating;
+      document.getElementById("modalActors").textContent = "Oyuncular: " + data.actors;
+      document.getElementById("modalDescription").textContent = data.description;
+      document.getElementById("filmModal").style.display = "block";
+    } else {
+      alert("Film bilgisi bulunamadı: " + title);
+    }
+  });
+});
+
+
+   document.querySelectorAll('.calendar-day:not(.title)').forEach(day => {
+  day.addEventListener("click", e => {
+        if (e.target.classList.contains("comment-toggle")) return;
+        const title = card.dataset.title;
+        const data = filmData[title];
+        if (data) {
+          document.getElementById("modalTitle").textContent = title;
+          document.getElementById("modalYear").textContent = "Yıl: " + data.year;
+          document.getElementById("modalRating").textContent = "IMDb: " + data.rating;
+          document.getElementById("modalActors").textContent = "Oyuncular: " + data.actors;
+          document.getElementById("modalDescription").textContent = data.description;
+          document.getElementById("filmModal").style.display = "block";
+        }
+      });
+    });
+
+  document.querySelectorAll(".kitap-card").forEach(card => {
+  card.addEventListener("click", e => {
+    if (e.target.classList.contains("comment-toggle") || e.target.classList.contains("favorite-btn")) return;
+
+    const title = card.dataset.title;
+    const data = kitapData[title];
+
+    if (data) {
+      document.getElementById("kitapModalTitle").textContent = title;
+      document.getElementById("kitapModalYear").textContent = "Yıl: " + data.year;
+      document.getElementById("kitapModalRating").textContent = "Puan: " + data.rating;
+      document.getElementById("kitapModalAuthor").textContent = "Yazar: " + data.author;
+      document.getElementById("kitapModalDescription").textContent = data.description;
+      document.getElementById("kitapModal").style.display = "block";
+    } else {
+      alert("Kitap bilgisi bulunamadı: " + title);
+    }
+  });
+});
+
+
+
+    function closeModal() {
+      document.getElementById("filmModal").style.display = "none";
+    }
+
+    function toggleCommentBox(event) {
+      if (event) event.stopPropagation();
+      const box = document.getElementById("commentBox");
+      box.style.display = box.style.display === "block" ? "none" : "block";
+    }
+
+    function toggleFavorite() {
+      const panel = document.getElementById("favoritesPanel");
+      panel.style.display = panel.style.display === "block" ? "none" : "block";
+    }
+    
+
+    function openSiteAmaciModal() {
+  document.getElementById("siteAmaciModal").style.display = "block";
+}
+
+function closeSiteAmaciModal() {
+  document.getElementById("siteAmaciModal").style.display = "none";
+}
+
+
+    function showFilmPage() {
+  showProjectionEffect(); // Efekti tetikler
+  hideAllPages(); // Diğer sayfaları gizler
+  document.getElementById("filmPage").style.display = "block"; // Film sayfasını gösterir
+  document.getElementById("backArrow").style.display = "block"; // Geri butonunu gösterir
+}
+ function closeModal() {
+      document.getElementById("filmModal").style.display = "none";
+    }
+
+    window.addEventListener("click", function (e) {
+      const modal = document.getElementById("filmModal");
+      if (e.target === modal) closeModal();
+         });
+
+  function closeKitapModal() {
+  document.getElementById("kitapModal").style.display = "none";
+}
+
+
+function showProjectionEffect() {
+  const effect = document.getElementById("filmProjectionEffect");
+  effect.style.animation = "none";
+  void effect.offsetWidth;
+  effect.style.animation = "projectionEffect 2s forwards";
+}
+
+function showKitapHarfEfekti() {
+  const efektKonteyner = document.getElementById("kitapHarfEfekti");
+  efektKonteyner.innerHTML = "";
+
+  const karakterler = "ABCDEFGHIJKLMNOPQRSTUVWXYZÇŞĞÜİÖ0123456789"; // harf ve rakam karışık
+
+  for (let i = 0; i < 100; i++) {
+    const span = document.createElement("span");
+    span.classList.add("harf");
+
+    // Rasgele karakter seç
+    span.textContent = karakterler[Math.floor(Math.random() * karakterler.length)];
+
+    // Rasgele konumlar ve gecikmeler
+    span.style.left = Math.random() * 100 + "vw";
+    span.style.top = Math.random() * 20 + "vh";
+    span.style.animationDelay = `${Math.random() * 1.5}s`;
+
+    efektKonteyner.appendChild(span);
+  }
+
+  // Efekti temizle (isteğe bağlı)
+  setTimeout(() => {
+    efektKonteyner.innerHTML = "";
+  }, 4000);
+}
+
+
+function showKitapPage() {
+  showKitapHarfEfekti(); // Harf efekti başlat
+  hideAllPages();
+  document.getElementById("kitapPage").style.display = "block";
+  document.getElementById("backArrow").style.display = "block";
+}
+
+    function showTiyatroPage() {
+  hideAllPages();
+  document.getElementById("tiyatroPage").style.display = "block";
+  document.getElementById("backArrow").style.display = "block";
+
+  // Şehir seçimlerini göster
+  document.getElementById("sehirSecimi").style.display = "flex";
+  document.getElementById("tiyatroTakvimi").style.display = "none"; // takvim gizli başlasın
+
+  // Perde animasyonu
+  const sol = document.getElementById("perdeSol");
+  const sag = document.getElementById("perdeSag");
+
+  sol.classList.remove("acik");
+  sag.classList.remove("acik");
+
+  sol.style.display = "block";
+  sag.style.display = "block";
+
+  setTimeout(() => {
+    sol.classList.add("acik");
+    sag.classList.add("acik");
+  }, 100);
+
+  setTimeout(() => {
+    sol.style.display = "none";
+    sag.style.display = "none";
+  }, 2100);
+}
+
+
+
+   function goBack() {
+  hideAllPages();
+  document.querySelector(".center-buttons").style.display = "flex";
+  document.getElementById("backArrow").style.display = "none";
+}
+
+function hideAllPages() {
+  document.getElementById("filmPage").style.display = "none";
+  document.getElementById("kitapPage").style.display = "none";
+  document.getElementById("tiyatroPage").style.display = "none";
+  document.querySelector(".center-buttons").style.display = "none";
+  document.getElementById("favoritesPanel").style.display = "none";
+  document.getElementById("sehirSecimi").style.display = "none";
+document.getElementById("tiyatroTakvimi").style.display = "none";
+
+}
+
+
+    function openLogin() {
+      document.getElementById("loginPopup").style.display = "block";
+      document.getElementById("popupOverlay").style.display = "block";
+    }
+
+    function closeLogin() {
+      document.getElementById("loginPopup").style.display = "none";
+      document.getElementById("popupOverlay").style.display = "none";
+    }
+
+    function login() {
+  const email = document.getElementById("emailInput").value;
+  const password = document.getElementById("passwordInput").value;
+
+  // Örnek doğru kullanıcı bilgileri
+  const validEmail = "ipekbuyu@gmail.com";
+  const validPassword = "258025";
+
+  if (email === validEmail && password === validPassword) {
+    alert("Giriş başarılı!");
+
+    // Kullanıcı adını e-postadan çıkar (örnek: test@example.com → test)
+    const userName = email.split("@")[0];
+
+    // Navbar’da kullanıcı bilgilerini göster
+    document.getElementById("userName").textContent = `Hoş geldin, ${userName}`;
+    document.getElementById("userInfo").style.display = "flex";
+    document.getElementById("loginLink").style.display = "none";
+
+    // Giriş kutusunu kapat
+    closeLogin();
+  } else {
+    alert("E-posta veya şifre hatalı.");
+  }
+}
+
+function logout() {
+  document.getElementById("userInfo").style.display = "none";
+  document.getElementById("loginLink").style.display = "flex";
+  document.getElementById("logoutMenu").style.display = "none";
+  document.getElementById("emailInput").value = "";
+  document.getElementById("passwordInput").value = "";
+  alert("Çıkış yapıldı.");
+}
+function openRegister() {
+  document.getElementById("registerPopup").style.display = "block";
+  document.getElementById("registerOverlay").style.display = "block";
+}
+
+function closeRegister() {
+  document.getElementById("registerPopup").style.display = "none";
+  document.getElementById("registerOverlay").style.display = "none";
+}
+
+function register() {
+  const name = document.getElementById("registerName").value.trim();
+  const email = document.getElementById("registerEmail").value.trim();
+  const password = document.getElementById("registerPassword").value;
+
+  if (!name || !email || !password) {
+    alert("Lütfen tüm alanları doldurun.");
+    return;
+  }
+
+  let users = JSON.parse(localStorage.getItem("users")) || [];
+
+  const existingUser = users.find(user => user.email === email);
+  if (existingUser) {
+    alert("Bu e-posta ile zaten kayıt olunmuş.");
+    return;
+  }
+
+  users.push({ name, email, password });
+  localStorage.setItem("users", JSON.stringify(users));
+
+  alert("Kayıt başarılı! Şimdi giriş yapabilirsiniz.");
+  closeRegister();
+}
+function toggleFavoriteItem(event) {
+  event.stopPropagation(); // Kart tıklamasını engeller
+
+  // Giriş kontrolü
+  const userInfoVisible = document.getElementById("userInfo").style.display === "flex";
+  if (!userInfoVisible) {
+    alert("Favorilere eklemek için önce giriş yapmalısınız.");
+    openLogin(); // Giriş penceresini aç
+    return;
+  }
+
+  // Favori işlemleri (dilersen bu kısıma favori kaydetme kodu da ekleyebilirsin)
+  const btn = event.target;
+  const isFavorite = btn.classList.toggle("favorited");
+  btn.textContent = isFavorite ? "❤️" : "🤍";
+}
+
+function toggleLogoutMenu() {
+  const menu = document.getElementById("logoutMenu");
+  menu.style.display = menu.style.display === "block" ? "none" : "block";
+}
+
+// Sayfa dışına tıklanınca menüyü kapatma
+window.addEventListener("click", function (e) {
+  if (!e.target.closest("#userInfo")) {
+    document.getElementById("logoutMenu").style.display = "none";
+  }
+});
+
+  // Tiyatro takvimindeki günlere tıklama
+document.querySelectorAll('.calendar-day:not(.title)').forEach(day => {
+  day.addEventListener('click', () => {
+    const html = day.innerHTML;
+    const matches = html.match(/<small>(.*?)<br>(.*?)<\/small>/);
+
+    if (matches && matches.length === 3) {
+      const oyunAdi = matches[1];
+      const saat = matches[2];
+
+      document.getElementById('tiyatroTitle').textContent = oyunAdi;
+      document.getElementById('tiyatroTime').textContent = saat;
+      document.getElementById('tiyatroModal').style.display = 'block';
+    }
+  });
+});
+
+// Modal kapatma
+function closeTiyatroModal() {
+  document.getElementById('tiyatroModal').style.display = 'none';
+}
+
+  
+
+  // Modal kapatma
+  function closeTiyatroModal() {
+    document.getElementById('tiyatroModal').style.display = 'none';
+  }
+
+  function handleFavoritesClick() {
+  const userInfoVisible = document.getElementById("userInfo").style.display === "flex";
+  if (!userInfoVisible) {
+    alert("Favorilere erişmek için önce giriş yapmalısınız.");
+    openLogin(); // giriş popup'ını aç
+  } else {
+    // Favori listesi gösterilebilir.
+    alert("Favoriler sayfasına yönlendiriliyor.");
+  }
+}
+
+function handleSavedClick() {
+  const userInfoVisible = document.getElementById("userInfo").style.display === "flex";
+  if (!userInfoVisible) {
+    alert("Kaydedilenlere erişmek için önce giriş yapmalısınız.");
+    openLogin(); // giriş popup'ını aç
+  } else {
+    // Kaydedilenler listesi gösterilebilir.
+    alert("Kaydedilenler sayfasına yönlendiriliyor.");
+  }
+}
+function sehirSec(sehir) {
+  alert(sehir + " için tiyatro programı gösteriliyor.");
+  document.getElementById("tiyatroTakvimi").style.display = "block";
+}
+
+    window.addEventListener("click", function (e) {
+  const kitapModal = document.getElementById("kitapModal");
+  if (e.target === kitapModal) closeKitapModal();
+});
+  
+
+  </script>
+  <div id="perdeSol" class="perde perde-sol"></div>
+  <div id="perdeSag" class="perde perde-sag"></div>
+  
+  <div id="filmProjectionEffect" class="film-opening-effect"></div>
+  <div id="kitapHarfEfekti" class="kitap-harf-efekti"></div>
+
+  <!-- Kayıt Ol Popup -->
+<div class="popup-overlay" id="registerOverlay" onclick="closeRegister()"></div>
+<div class="login-popup" id="registerPopup">
+  <h2>Kayıt Ol</h2>
+  <input type="text" id="registerName" placeholder="Adınız" />
+  <input type="email" id="registerEmail" placeholder="E-posta" />
+  <input type="password" id="registerPassword" placeholder="Şifre" />
+  <button onclick="register()">Kaydol</button>
+</div>
+
+</body>
+</html>

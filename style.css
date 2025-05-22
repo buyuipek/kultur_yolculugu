@@ -1,0 +1,602 @@
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background: linear-gradient(to right, #cb7eb5, #cb7eb5); /* ← bu doğrudan görünür */
+}
+
+.container {
+  width: 100%;
+}
+
+/* Navbar */
+.navbar {
+  background-color: #6b1864;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+}
+.logo-container {
+  display: flex;
+  align-items: center;
+}
+.menu-icon {
+  display: inline-block;
+  cursor: pointer;
+  margin-right: 15px;
+}
+.menu-icon div {
+  width: 25px;
+  height: 3px;
+  background-color: white;
+  margin: 4px 0;
+}
+.logo a {
+  color: white;
+  font-size: 20px;
+  text-decoration: none;
+}
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  align-items: center;
+}
+li {
+  margin-left: 20px;
+  display: flex;
+  align-items: center;
+}
+li a {
+  color: white;
+  text-decoration: none;
+  font-size: 16px;
+  margin-left: 5px;
+  cursor: pointer;
+}
+li img {
+  width: 18px;
+  height: 18px;
+}
+li a:hover {
+  text-decoration: underline;
+}
+
+/* Geri Dön Butonu */
+.back-arrow {
+  display: none;
+  position: absolute;
+  top: 70px;
+  left: 25px;
+  font-size: 22px;
+  cursor: pointer;
+  color: #333;
+  background-color: white;
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  text-align: center;
+  line-height: 32px;
+  box-shadow: 0 0 4px rgba(59, 107, 110, 0.2);
+  z-index: 100;
+}
+.back-arrow:hover {
+  background-color: #eee;
+}
+.center-buttons {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 30px; /* butonlar arası boşluk */
+}
+
+
+.center-buttons button {
+  width: 250px;
+  padding: 25px;
+  font-size: 24px;
+  cursor: pointer;
+  border: none;
+  border-radius: 12px;
+  color: white;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.2s ease, box-shadow 0.3s ease;
+  box-shadow: 0 4px 15px rgba(9, 4, 52, 0.2);
+}
+.center-buttons button::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -75%;
+  width: 50%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.3);
+  transform: skewX(-20deg);
+  transition: left 0.4s ease;
+}
+.center-buttons button:hover::before {
+  left: 130%;
+}
+
+.center-buttons button:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+}
+
+
+/* Favoriler Paneli */
+.favorites-panel {
+  display: none;
+  position: absolute;
+  top: 70px;
+  left: 20px;
+  background-color: white;
+  padding: 15px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  width: 170px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  text-align: center;
+}
+.favorites-label {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+.favorites-label img {
+  width: 24px;
+  height: 24px;
+}
+
+/* Sayfa İçeriği */
+.content-page {
+  display: none;
+  margin-top: 50px;
+  padding: 20px;
+  text-align: center;
+  position: relative;
+}
+
+/* Film Kartları */
+.film-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+  margin-top: 30px;
+}
+.film-card {
+  width: 180px;
+  background-color: #fff;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 0 8px rgba(45, 34, 79, 0.1);
+  transition: transform 0.2s;
+  cursor: pointer;
+}
+.film-card:hover {
+  transform: scale(1.05);
+}
+.film-card img {
+  width: 100%;
+  height: 270px;
+  object-fit: cover;
+}
+.film-info {
+  padding: 10px;
+  text-align: center;
+}
+.film-info h3 {
+  margin: 5px 0;
+  font-size: 18px;
+}
+.film-info p {
+  color: #777;
+  font-size: 14px;
+  margin: 0;
+}
+.comment-toggle {
+  margin-top: 8px;
+  background: none;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+/* Modal */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 2000;
+  left: 0;
+  top: 0;
+  width: 100vw;
+  height: 100vh;
+  overflow: auto;
+  background-color: rgba(220, 57, 57, 0.6);
+}
+.modal-content {
+  background-color: #fff;
+  margin: 10% auto;
+  padding: 25px;
+  border: 1px solid #888;
+  width: 90%;
+  max-width: 500px;
+  border-radius: 10px;
+  position: relative;
+  box-shadow: 0 0 20px rgba(96, 186, 6, 0.4);
+}
+.modal-content h2 {
+  margin-top: 0;
+  font-size: 24px;
+}
+.modal-content p {
+  margin: 10px 0;
+  font-size: 16px;
+  color: #931010;
+}
+.close {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  color: #aaa;
+  font-size: 28px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+.close:hover,
+.close:focus {
+  color: #000;
+}
+
+/* Yorum Kutusu */
+.comment-box {
+  display: none;
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 300px;
+  background-color: white;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  box-shadow: 0 0 12px rgba(0, 0, 0, 0.3);
+  padding: 15px;
+  z-index: 2001;
+}
+.comment-header {
+  display: flex;
+  justify-content: space-between;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+.comment-box textarea {
+  width: 100%;
+  height: 80px;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  resize: none;
+}
+.comment-box button {
+  margin-top: 10px;
+  width: 100%;
+  padding: 8px;
+  background-color: #307dbb;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.comment-box button:hover {
+  background-color: #555;
+}
+
+/* Giriş Popup */
+.login-popup {
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: white;
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
+  z-index: 1000;
+}
+.login-popup input {
+  display: block;
+  width: 100%;
+  margin-bottom: 15px;
+  padding: 10px;
+  font-size: 16px;
+}
+.login-popup button {
+  padding: 10px 20px;
+  font-size: 16px;
+  background-color: #333;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.login-popup button:hover {
+  background-color: #555;
+}
+.popup-overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 999;
+}
+
+
+.kitap-grid {
+  display: flex;                  /* Yan yana dizmek için flex kullanıyoruz */
+  flex-wrap: wrap;               
+  justify-content: center;       
+  gap: 20px;                      /* Kartlar arası boşluk */
+  margin-top: 30px;
+}
+
+/* Kitap Kartı Genel Yapısı */
+.kitap-card {
+  width: 180px;
+  background-color: #fff;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s;
+  cursor: pointer;
+}
+
+.kitap-card:hover {
+  transform: scale(1.05); /* Hover animasyonu */
+}
+
+/* Kitap Görseli */
+.kitap-card img {
+  width: 100%;
+  height: 270px;
+  object-fit: cover;  /* Görselin taşmasını engeller */
+}
+
+/* Kitap Bilgileri */
+.kitap-info {
+  padding: 10px;
+  text-align: center;
+}
+
+.kitap-info h3 {
+  margin: 5px 0;
+  font-size: 18px;
+}
+
+.kitap-info p {
+  color: #777;
+  font-size: 14px;
+  margin: 0;
+}
+
+
+/* TAKVİM (Tiyatro Sayfası) */
+.calendar {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 4px;
+  max-width: 700px;
+  margin: 20px auto;
+  font-family: sans-serif;
+}
+.calendar-day {
+  border: 1px solid #ccc;
+  padding: 20px;
+  text-align: center;
+  font-size: 16px;
+  background-color: #f9f9f9;
+}
+.calendar-day.title {
+  font-weight: bold;
+  background-color: #dedede;
+}
+.perde {
+  position: fixed;
+  top: 0;
+  width: 50vw;
+  height: 100vh;
+  background: maroon;
+  z-index: 3000;
+  transition: transform 2s ease;
+}
+
+.perde-sol {
+  left: 0;
+  transform: translateX(0);
+}
+
+.perde-sag {
+  right: 0;
+  transform: translateX(0);
+}
+
+.perde-sol.acik {
+  transform: translateX(-100%);
+}
+
+.perde-sag.acik {
+  transform: translateX(100%);
+}
+.perde {
+  display: none; /* perde ilk başta görünmez olur */
+}
+.film-opening-effect {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: radial-gradient(ellipse at center, rgba(255,255,255,0.2) 0%, rgba(0, 0, 0, 0.95) 70%);
+  z-index: 2500;
+  opacity: 0;
+  pointer-events: none;
+}
+
+
+
+@keyframes projectionEffect {
+  0% { opacity: 0; }
+  30% { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+
+
+@keyframes projectionEffect {
+  0% { opacity: 0; }
+  30% { opacity: 1; }
+  100% { opacity: 0; }
+}
+.kitap-harf-efekti {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 2700;
+  overflow: hidden;
+}
+
+.harf {
+  position: absolute;
+  font-size: 36px; /* daha büyük */
+  font-weight: 800; /* daha kalın */
+  font-family: 'Georgia', serif;
+  color: #3e2d19;
+  opacity: 0;
+  animation: harfAnimasyon 2.5s forwards;
+  pointer-events: none;
+}
+
+
+@keyframes harfAnimasyon {
+  0% {
+    transform: translateY(-50px) scale(0.5) rotate(0deg);
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+    transform: translateY(0px) scale(1) rotate(15deg);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(80px) scale(1.2) rotate(0deg);
+  }
+}
+.film-card {
+  position: relative;
+  border: 8px solid rgb(238, 233, 233);
+  border-image: url('https://i.imgur.com/BzQJbIc.png') 30 round; /* Film şeridi efekti */
+  padding: 0;
+}
+.kitap-card {
+  background: linear-gradient(to right, #e3e0dc 10%, #fff 10%); /* kitap cildi efekti */
+  border-left: 10px solid #ddd5ce; /* cilt kısmı */
+  box-shadow: 3px 3px 6px rgba(0,0,0,0.2);
+}
+.calendar-day::before {
+  content: "🎭"; 
+  display: block;
+  font-size: 18px;
+  margin-bottom: 5px;
+}
+#logoutMenu a:hover {
+  text-decoration: underline;
+  color: #000;
+}
+
+.favorite-btn.favorited {
+  color: red;
+}
+.film-btn {
+  background: linear-gradient(135deg, #ce27f0, #de67e6);
+}
+
+.kitap-btn {
+  background: linear-gradient(135deg, #f877eb, #AB0300);
+}
+
+.tiyatro-btn {
+  background: linear-gradient(135deg, #c33764, #1d2671);
+}
+
+
+.center-buttons {
+  background-color: rgba(244, 244, 244, 0.7);
+  padding: 40px;
+  border-radius: 16px;
+}
+.sehir-secimi {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.sehir-buttons button {
+  margin: 10px;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+}
+.favorites-label,
+.saved-note {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-weight: bold;
+  cursor: pointer;
+  padding: 6px;
+}
+
+.favorites-label:hover,
+.saved-note:hover {
+  background-color: #f3f3f3;
+  border-radius: 6px;
+}
+.sehir-secimi {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+.sehir-secimi button {
+  padding: 10px 20px;
+  font-size: 16px;
+  background-color: #6b1864;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.sehir-secimi button:hover {
+  background-color: #8e2a88;
+}
